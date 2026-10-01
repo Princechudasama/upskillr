@@ -38,6 +38,11 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong. Please try again later.", null);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), null);
+    }
+
     private ResponseEntity<ApiErrorResponse> buildResponse(HttpStatus status, String message, Map<String, String> fieldErrors) {
         ApiErrorResponse body = ApiErrorResponse.builder()
                 .timestamp(Instant.now())
